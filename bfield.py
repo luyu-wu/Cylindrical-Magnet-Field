@@ -19,7 +19,7 @@ import scipy
 def biot_savart(v1,v2,position,current): # input 2 points (line) and current
     r = position - (v1+v2)/2
     return np.cross(current*(v2-v1), r) * (10**-7) / (la.norm(r)**3) # biot savart equation
- 
+
 def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[70,30]): # position (v3d coordinates), magnet (radius, height, magnetization)
     v_steps,cir_steps = accuracy[0],accuracy[1]
     field = np.zeros(3)
