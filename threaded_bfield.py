@@ -13,7 +13,6 @@ import multiprocessing as mp
 import math
 import scipy
 
-
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
 threads = mp.cpu_count()
 
@@ -26,16 +25,14 @@ g_mradius = 0
 g_mheight = 0
 g_position = 0
 
-def biot_savart(v1,v2,position,current): # input 2 points (line) and current
-    r = position - (v1+v2)/2
-    return np.cross(current*(v2-v1), r) * (10**-7) / (la.norm(r)**3) # biot savart equation
-
-
 def worker(chunk):
     re_var = np.zeros(3)
     for height in chunk: #[int(v_steps*(thread_num/threads)):int(v_steps*((thread_num+1)/threads))-1]: # split into threads
         for rad in circle:
-            re_var += biot_savart(np.array([np.cos(rad)*g_mradius,np.sin(rad)*g_mradius,height]),np.array([np.cos(rad+cir_step)*g_mradius,np.sin(rad+cir_step)*g_mradius,height]),g_position,current)
+            v1,v2 = np.array([np.cos(rad)*g_mradius,np.sin(rad)*g_mradius,height]),np.array([np.cos(rad+cir_step)*g_mradius,np.sin(rad+cir_step)*g_mradius,height])
+                        
+            r = g_position - (v1+v2)/2
+            re_var += np.cross(current*(v2-v1), r) * (10**-7) / (la.norm(r)**3)
     return re_var
 
 def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[70,30]): # position (v3d coordinates), magnet (radius, height, magnetization)

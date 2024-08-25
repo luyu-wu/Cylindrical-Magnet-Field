@@ -4,8 +4,10 @@ from numpy import linalg as la
 import math
 import scipy
 from scipy.interpolate import make_interp_spline, BSpline
-import threaded_bfield as bfield
+import bfield
+import time
 
+t0 = time.perf_counter()
 v_steps = 200 # circles around the magnet
 cir_steps = 60 # steps around the circle
 
@@ -51,11 +53,4 @@ for hfrom in distances:
         )
     field = np.append(field,strength[2])
 
-plt.plot(distances*100,field*1000,label="Field (mT) vs. Distance (cm)")
-
-plt.errorbar(exp_distances,experimental,yerr=exp_error,fmt='o',label="Experimental Values")
-plt.xlabel("Distance from Magnet (cm)")
-plt.ylabel("Magnetic Field Strength (mT)")
-plt.title("Numerical B-Field Solution")
-plt.legend()
-plt.show()
+print("Time Taken:",time.perf_counter()-t0,"s")

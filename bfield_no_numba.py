@@ -6,7 +6,6 @@ This solution uses a bound current line integral approximation, numerically inte
 '''
 
 ## MODULES
-from numba import jit
 import numpy as np 
 import matplotlib.pyplot as plt
 from numpy import linalg as la
@@ -15,8 +14,6 @@ import scipy
 
 
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
-
-@jit(nopython = True,nogil=True)
 def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[70,30]): # position (v3d coordinates), magnet (radius, height, magnetization)
     v_steps,cir_steps = accuracy[0],accuracy[1]
     field = np.zeros(3)
