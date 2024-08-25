@@ -29,3 +29,9 @@ bfield.solution(np.array([0,0,2]),magnetization=1e5,mradius=0.02,mheight=0.01,ac
 srry for teh messy code, this is just some stuff i used for iypt that it hought id publish ya :P
 
 also i wrote this in like 2 hours on the 高铁从from kunming到深圳 so like there may be issues no guarantees :pensive:
+
+
+## Discretization Error
+![image](https://github.com/user-attachments/assets/0f5b6fcc-4ff5-43bc-9083-4941de71257c)
+
+(Relative to a high-fidelity simulation)
