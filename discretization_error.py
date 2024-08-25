@@ -4,8 +4,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from numpy import linalg as la
 import bfield
 
-size = 10  # Grid size
-
+size_c = 28  # Grid size
+size_v = 10
 # Reference value calculation
 reference = la.norm(bfield.solution(
     position=np.array([0, 0, 0]),
@@ -17,14 +17,14 @@ reference = la.norm(bfield.solution(
 print("Found reference")
 
 # Define accuracy ranges
-accuracies_v = np.linspace(1, 10, size).astype(int)
-accuracies_c = np.linspace(3, 40, size).astype(int)
-relative_acc = np.zeros((size, size))
+accuracies_v = np.linspace(1, 10, size_v).astype(int)
+accuracies_c = np.linspace(3, 30, size_c).astype(int)
+relative_acc = np.zeros((size_c, size_v))
 
 # Calculate relative accuracy for different discretizations
 
-for v_s in range(size):
-    for c_s in range(size):
+for v_s in range(size_v):
+    for c_s in range(size_c):
         current_solution = la.norm(bfield.solution(
             position=np.array([0, 0, 0]),
             mradius=0.01,
