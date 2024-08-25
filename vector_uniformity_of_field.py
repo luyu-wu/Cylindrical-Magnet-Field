@@ -4,7 +4,7 @@ from numpy import linalg as la
 import math
 import scipy
 from scipy.interpolate import make_interp_spline, BSpline
-import threaded_bfield as bfield
+import bfield
 
 v_steps = 25 # circles around the magnet
 cir_steps = 100 # steps around the circle

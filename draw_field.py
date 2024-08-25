@@ -2,8 +2,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 from numpy import linalg as la
-import threaded_bfield as bfield
-#import bfield as bfield
+import bfield as bfield
 import math
 import scipy
 from time import perf_counter
