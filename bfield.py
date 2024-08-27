@@ -10,7 +10,6 @@ from numba import jit
 import numpy as np 
 import matplotlib.pyplot as plt
 from numpy import linalg as la
-import math
 import scipy
 
 

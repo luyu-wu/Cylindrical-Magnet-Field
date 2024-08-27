@@ -2,19 +2,19 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 from numpy import linalg as la
-import bfield as bfield
+import bfield
 import math
 import scipy
 from time import perf_counter
 
-v_steps = 80 # circles around the magnet
-cir_steps = 60 # steps around the circle
+v_steps = 10 # circles around the magnet
+cir_steps = 40 # steps around the circle
 
 a = 0.005  # radius of the magnet in meters
 b = 0.001  # half-length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
-grid = 80
+grid = 40
 x = np.linspace(-0.02, 0.02, grid)
 z = np.linspace(-0.02, 0.02, grid)
 
@@ -28,7 +28,7 @@ t1_start = perf_counter()
 for i in range(grid):
     print(100*i/grid,"% Completion")
     for y in range(grid):
-        xd = 1000*bfield.solution(np.array([x[i],0,z[y]]),magnetization=M,mradius=a,mheight=b*2,accuracy=[v_steps,cir_steps])
+        xd = 1000*bfield.solution(np.array([x[i],0,z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
         Bx[i,y],Bz[y,i] = xd[0],xd[2]
 
 t1_stop = perf_counter()
@@ -43,7 +43,7 @@ fig, ax = plt.subplots(figsize=(10, 10))
 
 # Plot the B-field
 print("Rendering Stream Plot")
-stream = ax.streamplot(X, Z, Bx, Bz, density=10, color=B_mag, cmap='viridis', 
+stream = ax.streamplot(X, Z, Bx, Bz, density=0.5, color=B_mag, cmap='viridis', 
                        linewidth=1, arrowsize=1, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
 
 # Plot the magnet

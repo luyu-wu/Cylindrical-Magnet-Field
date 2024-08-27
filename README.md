@@ -11,15 +11,25 @@ It actually takes quite a bit of latency to spawn so many workers, so if u can u
 
 also like the code isnt very fast, i would write in rust but i like to import it easily into other python scripts /shrug
 
-u can look at draw_field or accuracy_field as examples of how to use
+u can look at draw_field or other scripts as examples of how to use
 
 ```python
-import bfield 
+import bfield
 # OR
 import threaded_bfield as bfield
 
 bfield.solution(np.array([0,0,2]),magnetization=1e5,mradius=0.02,mheight=0.01,accuracy=[80,80])
 ```
+## Dependencies
+```
+# Python Packages
+numpy
+matplotlib
+scipy
+
+numba (optional, use no_numba or threaded bfield module if u don't want numba)
+```
+
 
 ## Showcase
 ![high_res](https://github.com/user-attachments/assets/0909a81f-3f80-4827-82ce-33d3d0b28551)
