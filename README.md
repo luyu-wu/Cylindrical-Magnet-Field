@@ -4,6 +4,9 @@
 This code calculates the B-field of a cylindrical magnet at any point in 3D space given magnetization, radius, and height.
 
 I use a bound-current approximation, discretized into rings. I discretize these rings into arcs, and solve for the B-field at any given point using Biot-Savart and the superposition principle.
+It's of course quite flexible, and can be extended for use as a current-ring, solenoid, or hemholtz coil field simulation.
+
+i wrote it for IYPT so if u end up using it for some YPT around the world pls let me know and we can chat a bit!
 
 ## Organization
 uhh bfield and threaded_bfield are single worker and multi-worker (multithreaded) versions of the same thing.

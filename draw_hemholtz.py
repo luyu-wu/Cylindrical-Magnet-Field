@@ -7,15 +7,15 @@ import math
 import scipy
 from time import perf_counter
 
-v_steps = 20 # circles around the magnet
+v_steps = 2 # circles around the magnet
 cir_steps = 50 # steps around the circle
 
-a = 0.005  # radius of the magnet in meters
-b = 0.001  # length of the magnet in meters
+a = 0.15  # radius of the magnet in meters
+b = 0.3  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
 grid = 40
-grid_size = 0.04
+grid_size = 1
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
@@ -48,7 +48,12 @@ stream = ax.streamplot(X, Z, Bx, Bz, density=2, color=B_mag, cmap='viridis',
                        linewidth=1, arrowsize=1, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
 
 # Plot the magnet
-ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
+#ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
+
+ax.add_patch(plt.Rectangle((-a, b/2), 2*a, 0.01, fill=True, facecolor='grey', edgecolor='black'))
+
+ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, 0.01, fill=True, facecolor='grey', edgecolor='black'))
+
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)
