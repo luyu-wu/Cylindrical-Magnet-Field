@@ -45,6 +45,6 @@ also i wrote this in like 2 hours on the 高铁从from kunming到深圳 so like 
 
 
 ## Discretization Error
-![image](https://github.com/user-attachments/assets/36084e8a-2e6b-4ba3-ad53-65e1e9c4030a)
+![image](https://github.com/user-attachments/assets/8a0b093c-5b56-4044-a915-937d18978707)
 
 (Relative to a high-fidelity simulation)
