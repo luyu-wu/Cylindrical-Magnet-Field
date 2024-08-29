@@ -7,11 +7,8 @@ This solution uses a bound current line integral approximation, numerically inte
 
 ## MODULES
 import numpy as np 
-import matplotlib.pyplot as plt
 from numpy import linalg as la
 import multiprocessing as mp
-import math
-import scipy
 
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
 threads = mp.cpu_count()

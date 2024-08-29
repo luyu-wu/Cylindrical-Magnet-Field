@@ -14,8 +14,8 @@ a = 0.15  # radius of the magnet in meters
 b = 0.3  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
-grid = 40
-grid_size = 1
+grid = 60
+grid_size = 0.6
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
@@ -44,7 +44,7 @@ fig, ax = plt.subplots(figsize=(10, 10))
 
 # Plot the B-field
 print("Rendering Stream Plot")
-stream = ax.streamplot(X, Z, Bx, Bz, density=2, color=B_mag, cmap='viridis', 
+stream = ax.streamplot(X, Z, Bx, Bz, density=5, color=B_mag, cmap='viridis', 
                        linewidth=1, arrowsize=1, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
 
 # Plot the magnet

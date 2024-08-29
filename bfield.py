@@ -8,10 +8,6 @@ This solution uses a bound current line integral approximation, numerically inte
 ## MODULES
 from numba import jit
 import numpy as np 
-import matplotlib.pyplot as plt
-from numpy import linalg as la
-import scipy
-
 
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
 
@@ -29,7 +25,7 @@ def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[
             v1,v2 = np.array([np.cos(rad)*mradius,np.sin(rad)*mradius,height]),np.array([np.cos(rad+cir_step)*mradius,np.sin(rad+cir_step)*mradius,height])
             
             r = position - (v1+v2)/2
-            field += np.cross(current*(v2-v1), r) * (10**-7) / (la.norm(r)**3)
+            field += np.cross(current*(v2-v1), r) * (10**-7) / (np.linalg.norm(r)**3)
                         
     return field # v3d with magnitude being in tesla
 
