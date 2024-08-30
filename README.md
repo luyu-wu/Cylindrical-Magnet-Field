@@ -73,5 +73,6 @@ Single-threaded Solution
 
 # Note: Scaling is roughly linear with discretizations, with 10x10 disc. I get a 32us call time (roughy 30,657 calls/sec!).
 ```
-![benchmark](https://github.com/user-attachments/assets/f9e84c8b-0643-4e2c-9194-833fbecbbcec)
+![benchmark](https://github.com/user-attachments/assets/14023b21-19c9-43b3-a56e-288eff619c9c)
+
 
