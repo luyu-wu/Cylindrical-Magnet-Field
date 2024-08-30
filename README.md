@@ -57,9 +57,7 @@ also i wrote this in like 2 hours on the 高铁从from kunming到深圳 so like 
 # 4c8t system, Tiger Lake
 
 Numba JIT-Based Solution
-
 	First Call: 1188 ms # Needs JIT compilation
-	Total Time Taken: 541 ms
 	Discrete Call Time: 2706 us
 	Segment Call Time: 270 ns
 
@@ -72,4 +70,6 @@ Single-threaded Solution
 	First call: 246 ms
 	Discrete Call Time: 260706 us
 	Segment Call Time: 26070 ns
+
+# Note: Scaling is roughly linear with discretizations, with 10x10 disc. I get a 32us call time (roughy 30,657 calls/sec!).
 ```
