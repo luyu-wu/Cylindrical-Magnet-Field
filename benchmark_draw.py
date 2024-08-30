@@ -14,7 +14,7 @@ bfield.solution(
     mradius=0.005,
     mheight=0.002,
     magnetization=1.1*(10**7),
-    accuracy=[v_steps,cir_steps]
+    accuracy=[2,2]
 )
 
 # Circular discretizations benchmark
@@ -46,7 +46,6 @@ for i in range(length):
 x_axis = np.linspace(v_init*cir_ini,v_steps*cir_steps,length)
 
 # scatter stuff
-scatter_data = data_raw.flatten()
 x_scatter = np.zeros(length*batches)
 recursor = 0
 for i in x_axis:
@@ -54,7 +53,7 @@ for i in x_axis:
         x_scatter[recursor] = i
         recursor += 1
 
-plt.scatter(x_scatter,scatter_data,alpha=0.05,color="#FF9848")
+plt.scatter(x_scatter,data_raw.flatten(),alpha=0.05,color="#FF9848")
 plt.plot(x_axis, avs,linestyle='dashdot',color='#CC4F1B',label="Circular Discretizations")
 plt.fill_between(x_axis, avs-st_devs, avs+st_devs,alpha=0.5, edgecolor='#CC4F1B', facecolor='#FF9848')
 
@@ -90,7 +89,6 @@ for i in range(length):
 x_axis = np.linspace(v_init*cir_ini,v_steps*cir_steps,length)
 
 # scatter stuff
-scatter_data = data_raw.flatten()
 x_scatter = np.zeros(length*batches)
 recursor = 0
 for i in x_axis:
@@ -98,7 +96,7 @@ for i in x_axis:
         x_scatter[recursor] = i
         recursor += 1
 
-plt.scatter(x_scatter,scatter_data,alpha=0.05,color="#1B2ACC")
+plt.scatter(x_scatter,data_raw.flatten(),alpha=0.05,color="#1B2ACC")
 plt.plot(x_axis, avs,linestyle='dashdot',color='#1B2ACC',label="Vertical Discretizations")
 plt.fill_between(x_axis, avs-st_devs, avs+st_devs,alpha=0.5, edgecolor='#CC4F1B', facecolor='#089FFF')
 
