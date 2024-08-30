@@ -10,7 +10,7 @@ size_v = 10
 reference = la.norm(bfield.solution(
     position=np.array([0, 0, 0]),
     mradius=0.01,
-    mheight=0.01,
+    mheight=0.03,
     magnetization=1e7,
     accuracy=[100, 100]
 ))
@@ -28,7 +28,7 @@ for v_s in range(size_v):
         current_solution = la.norm(bfield.solution(
             position=np.array([0, 0, 0]),
             mradius=0.01,
-            mheight=0.01,
+            mheight=0.03,
             magnetization=1e7,
             accuracy=[accuracies_v[v_s], accuracies_c[c_s]]
         ))

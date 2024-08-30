@@ -48,3 +48,28 @@ also i wrote this in like 2 hours on the 高铁从from kunming到深圳 so like 
 ![image](https://github.com/user-attachments/assets/8a0b093c-5b56-4044-a915-937d18978707)
 
 (Relative to a high-fidelity simulation)
+
+
+## Benchmarking
+```
+## Parameters
+# 100 VT-DISC, 100 CIR-DISC, Averaged 100 Runs
+# 4c8t system, Tiger Lake
+
+Numba JIT-Based Solution
+
+	First Call: 1188 ms # Needs JIT compilation
+	Total Time Taken: 541 ms
+	Discrete Call Time: 2706 us
+	Segment Call Time: 270 ns
+
+Multi-threaded Solution
+	First Call: 89 ms
+	Discrete Call Time: 94074 us
+	Segment Call Time: 9407 ns
+
+Single-threaded Solution
+	First call: 246 ms
+	Discrete Call Time: 260706 us
+	Segment Call Time: 26070 ns
+```
