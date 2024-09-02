@@ -15,7 +15,7 @@ import numpy as np
 def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[70,30]): # position (v3d coordinates), magnet (radius, height, magnetization)
     v_steps,cir_steps = accuracy[0],accuracy[1]
     field = np.zeros(3)
-    current = magnetization*mheight/v_steps
+    current = 2*np.pi*mradius * magnetization*mheight/v_steps
     cir_step = np.pi*2 / cir_steps
 
     circle = np.linspace(0,2*np.pi,cir_steps)

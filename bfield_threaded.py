@@ -36,7 +36,7 @@ def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[
     global current,cir_step,circle,v_steps,cir_steps,circle,g_mradius,g_mheight, g_position
     g_mradius,g_mheight,g_position = mradius, mheight, position
     v_steps,cir_steps = accuracy[0],accuracy[1]
-    current = magnetization*mheight/v_steps
+    current = 2*np.pi*mradius *magnetization*mheight/v_steps
     cir_step = np.pi*2 / cir_steps
     circle = np.linspace(0,2*np.pi,cir_steps)
 
