@@ -6,26 +6,18 @@ This solution uses a bound current line integral approximation, numerically inte
 '''
 
 ## MODULES
-from numba import jit
+from numba import njit, prange
 import numpy as np 
-
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
 
-@jit
-def solution(position=np.zeros(3),mradius=0,mheight=0,magnetization=0,accuracy=[70,30]): # position (v3d coordinates), magnet (radius, height, magnetization)
-    v_steps,cir_steps = accuracy[0],accuracy[1]
+@njit
+def solution(position=np.zeros(3),mradius=.0,mheight=.0,magnetization=.0,accuracy=np.zeros(2)):
     field = np.zeros(3)
-    current = 2*np.pi*mradius * magnetization/v_steps
-    cir_step = np.pi*2 / cir_steps
-
-    circle = np.linspace(0,2*np.pi,cir_steps)
-    
-    for height in np.linspace(-(1/2)* mheight, (1/2) * mheight,v_steps):
-        for rad in circle:
-            v1,v2 = np.array([np.cos(rad)*mradius,np.sin(rad)*mradius,height]),np.array([np.cos(rad+cir_step)*mradius,np.sin(rad+cir_step)*mradius,height])
-            
-            r = position - (v1+v2)/2
-            field += np.cross(current*(v2-v1), r) * (10**-7) / (np.linalg.norm(r)**3)
-                        
-    return field # v3d with magnitude being in tesla
-
+    cir_step = np.pi*2 / accuracy[1]
+    for height in np.linspace(-mheight/2, mheight/2,accuracy[0]):
+        for rad in np.linspace(0,2*np.pi,accuracy[1]):
+            v1,v2 = np.array([np.cos(rad)*mradius,np.sin(rad)*mradius,height]),np.array([np.cos(rad+cir_step)*mradius,np.sin(rad+cir_step)*mradius,height])       
+            r = position - (v1+v2)/2 # Displacement vector
+            field += np.cross((v2-v1), r) / (np.linalg.norm(r)**3)
+                       
+    return field * 2*np.pi*mradius * magnetization * 1e-7 / accuracy[0] # v3d with magnitude being in tesla
