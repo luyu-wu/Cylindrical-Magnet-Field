@@ -7,11 +7,11 @@ import math
 import scipy
 from time import perf_counter
 
-v_steps = 20 # circles around the magnet
-cir_steps = 50 # steps around the circle
+v_steps = 1 # circles around the magnet
+cir_steps = 80 # steps around the circle
 
-a = 0.005  # radius of the magnet in meters
-b = 0.001  # length of the magnet in meters
+a = 0.0025  # radius of the magnet in meters
+b = 0  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
 grid = 100
@@ -44,8 +44,8 @@ fig, ax = plt.subplots(figsize=(10, 10))
 
 # Plot the B-field
 print("Rendering Stream Plot")
-stream = ax.streamplot(X, Z, Bx, Bz, density=6, color=B_mag, cmap='viridis', 
-                       linewidth=1, arrowsize=1, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
+stream = ax.streamplot(X, Z, Bx, Bz, density=3, color=B_mag, cmap='viridis', 
+                       linewidth=1, arrowsize=0, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
 
 # Plot the magnet
 ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
