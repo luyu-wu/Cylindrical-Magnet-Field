@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 from numpy import linalg as la
 import math
 import scipy
-from scipy.interpolate import make_interp_spline, BSpline
 import bfield
 
 v_steps = 30 # circles around the magnet
 cir_steps = 200 # steps around the circle
+
+
 
 experimental = [
 234.5
@@ -22,6 +23,7 @@ experimental = [
 ,23.35
 ,17.55
 ]
+
 exp_error = [
 6.10327780786685
 ,11.296521096731
@@ -38,7 +40,7 @@ exp_error = [
 
 exp_distances = np.linspace(1,11,11)
 
-distances = np.linspace(0.01,0.11,30)
+distances = np.linspace(0.01,0.11,100)
 
 field = np.array([])
 for hfrom in distances:
@@ -49,9 +51,9 @@ for hfrom in distances:
             magnetization=1.1*(10**6),
             accuracy=[v_steps,cir_steps]
         )
-    field = np.append(field,strength[2])
+    field = np.append(field,strength[2]*4500*hfrom**1.8)
 
-plt.plot(distances*100,field*1000,label="Field (mT) vs. Distance (cm)")
+plt.plot(distances*100,field*1000,label="Theoretical Model")
 
 plt.errorbar(exp_distances,experimental,yerr=exp_error,fmt='o',label="Experimental Values")
 plt.xlabel("Distance from Magnet (cm)")
