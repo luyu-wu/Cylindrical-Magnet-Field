@@ -8,14 +8,15 @@ import scipy
 from time import perf_counter
 
 v_steps = 1 # circles around the magnet
-cir_steps = 500 # steps around the circle
+cir_steps = 200 # steps around the circle
 
 a = 0.0025  # radius of the magnet in meters
-b = 0  # length of the magnet in meters
+b = 1e-9  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
 grid = 100
 grid_size = 0.1
+angle = np.pi
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
@@ -29,8 +30,8 @@ t1_start = perf_counter()
 for i in range(grid):
     print(100*i/grid,"% Completion")
     for y in range(grid):
-        xd = 1000*bfield.solution(np.array([x[i],0,z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
-        Bx[i,y],Bz[y,i] = xd[0],xd[2]
+        xd = 1000*bfield.solution(np.array([x[i]*np.cos(angle),x[i]*np.sin(angle),z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+        Bx[y,i],Bz[y,i] = la.norm(xd[0:1]),xd[2]
 
 t1_stop = perf_counter()
  

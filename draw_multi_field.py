@@ -34,7 +34,7 @@ for mag_num in range(len(magnet_pos)):
     for i in range(grid):
         print(100*i/(grid*len(magnet_pos)),"%")
         for y in range(grid):
-            xd = magnet_ori[mag_num]*bfield.solution(np.array([x[i]-magnet_pos[mag_num],0,z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-magnet_pos[mag_num],0,z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
             Bx[y,i] += xd[0]
             Bz[y,i] += xd[2]
 
@@ -59,7 +59,7 @@ for magnet_p in magnet_pos:
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)
-cbar.set_label('Log Magnetic field strength (T)')
+cbar.set_label('Log Magnetic field strength (mT)')
 
 ax.set_xlabel('x (m)')
 ax.set_ylabel('z (m)')
