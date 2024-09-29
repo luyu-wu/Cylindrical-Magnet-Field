@@ -35,6 +35,8 @@ numba (optional, use no_numba or threaded bfield module if u don't want numba)
 
 
 ## Showcase
+![multifield](https://github.com/user-attachments/assets/be06950f-b90f-424a-9de5-34decc347970)
+
 ![high_res](https://github.com/user-attachments/assets/0909a81f-3f80-4827-82ce-33d3d0b28551)
 
 
