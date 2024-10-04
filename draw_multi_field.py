@@ -10,14 +10,14 @@ import scipy
 from time import perf_counter
 
 v_steps = 1 # circles around the magnet
-cir_steps = 100 # steps around the circle
+cir_steps = 200 # steps around the circle
 
-a = 0.0025  # radius of the magnet in meters
+a = 0.0075  # radius of the magnet in meters
 b = 0.001  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
-magnet_pos = np.array([-0.02,0.02])
-magnet_ori = np.array([1,-1])
+magnet_pos = np.array([ [0,-0.03],[0.0,0.03],[0,0] ])
+magnet_ori = np.array([1,1,1])
 grid = 100
 grid_size = 0.07
 x = np.linspace(-grid_size/2, grid_size/2, grid)
@@ -34,7 +34,7 @@ for mag_num in range(len(magnet_pos)):
     for i in range(grid):
         print(100*i/(grid*len(magnet_pos)),"%")
         for y in range(grid):
-            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-magnet_pos[mag_num],0,z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-magnet_pos[mag_num][0],0,z[y] - magnet_pos[mag_num][1] ]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
             Bx[y,i] += xd[0]
             Bz[y,i] += xd[2]
 
@@ -55,7 +55,7 @@ stream = ax.streamplot(X, Z, Bx, Bz, density=3, color=B_mag, cmap='viridis',
 
 # Plot the magnet
 for magnet_p in magnet_pos:
-    ax.add_patch(plt.Rectangle((magnet_p-a, -b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
+    ax.add_patch(plt.Rectangle((magnet_p[0]-a, magnet_p[1]-b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)

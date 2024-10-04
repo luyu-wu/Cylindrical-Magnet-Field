@@ -31,7 +31,7 @@ for i in range(grid):
     print(100*i/grid,"% Completion")
     for y in range(grid):
         xd = 1000*bfield.solution(np.array([x[i]*np.cos(angle),x[i]*np.sin(angle),z[y]]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
-        Bx[y,i],Bz[y,i] = la.norm(xd[0:1]),xd[2]
+        Bx[y,i],Bz[y,i] = np.cos(angle)*xd[0] + np.sin(angle)*xd[1],xd[2]
 
 t1_stop = perf_counter()
  

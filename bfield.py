@@ -15,7 +15,7 @@ def solution(position=np.zeros(3),mradius=.0,mheight=.0,magnetization=.0,accurac
     field = np.zeros(3)
     cir_step = np.pi*2 / accuracy[1]
     for height in np.linspace(-mheight/2, mheight/2,accuracy[0]):
-        for rad in np.linspace((cir_step*height)/(mheight*accuracy[0]),2*np.pi+ (cir_step*height)/(mheight*accuracy[0]),accuracy[1]):
+        for rad in np.linspace(0,2*np.pi,accuracy[1]):
             v1,v2 = np.array([np.cos(rad)*mradius,np.sin(rad)*mradius,height]),np.array([np.cos(rad+cir_step)*mradius,np.sin(rad+cir_step)*mradius,height])       
             r = position - (v1+v2)/2 # Displacement vector
             field += np.cross((v2-v1), r) / (np.linalg.norm(r)**3)
