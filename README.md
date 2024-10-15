@@ -47,8 +47,11 @@ also i wrote this in like 2 hours on the 高铁从from kunming到深圳 so like 
 
 
 ## Discretization Error
-![image](https://github.com/user-attachments/assets/8a0b093c-5b56-4044-a915-937d18978707)
 
+![image](https://github.com/user-attachments/assets/c40fb930-aedd-479b-812d-a39719faa26b)
+(NEW ALGORITHM)
+![image](https://github.com/user-attachments/assets/8a0b093c-5b56-4044-a915-937d18978707)
+(OLD ALGORITHM)
 (Relative to a high-fidelity simulation)
 
 
