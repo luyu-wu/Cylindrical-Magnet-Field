@@ -4,7 +4,7 @@
 Written by Luyu as a general solution to a cylindrical magnet's b-field.
 This solution uses a bound current line integral approximation, numerically integrated along the length of the cylinder to obtain a valid approximation of the B-field of the cylindrical ferromagnets at any point outside it.
 '''
-
+print("USING AN OLD BFIELD SOLUTION, DO NOT USE")
 ## MODULES
 import numpy as np 
 from numpy import linalg as la
