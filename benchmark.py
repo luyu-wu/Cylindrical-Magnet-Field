@@ -6,9 +6,9 @@ import time
 
 print("\n\033[1mCylindrical B-Field Benchmark\033[0m\nPlease wait while the benchmark is run!\n")
 
-v_steps = 100 # circles around the magnet
+v_steps = 10 # circles around the magnet
 cir_steps = 100 # steps around the circle
-length = 1000
+length = 500
 
 t0 = time.perf_counter()
 
