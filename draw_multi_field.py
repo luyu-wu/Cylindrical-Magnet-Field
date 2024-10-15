@@ -16,10 +16,10 @@ a = 0.0075  # radius of the magnet in meters
 b = 0.001  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
-magnet_pos = np.array([ [0,-0.03],[0.0,0.03],[0,0] ])
-magnet_ori = np.array([1,1,1])
+magnet_pos = np.array([ [0.02,-0.03],[0.02,0.03],[0.02,0],[-0.02,-0.03],[-0.02,0.03],[-0.02,0] ])
+magnet_ori = np.array([1,1,1,-1,-1,-1])
 grid = 100
-grid_size = 0.07
+grid_size = 0.15
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
