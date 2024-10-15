@@ -10,7 +10,7 @@ import scipy
 from time import perf_counter
 
 v_steps = 1 # circles around the magnet
-cir_steps = 200 # steps around the circle
+cir_steps = 40 # steps around the circle
 
 a = 0.0075  # radius of the magnet in meters
 b = 0.001  # length of the magnet in meters
