@@ -10,7 +10,7 @@ import scipy
 from time import perf_counter
 
 v_steps = 1 # circles around the magnet
-cir_steps = 40 # steps around the circle
+cir_steps = 24 # steps around the circle
 
 a = 0.0075  # radius of the magnet in meters
 b = 0.001  # length of the magnet in meters
@@ -19,7 +19,7 @@ M = 1e5  # magnetization in A/m
 magnet_pos = np.array([ [0.02,-0.03],[0.02,0.03],[0.02,0],[-0.02,-0.03],[-0.02,0.03],[-0.02,0] ])
 magnet_ori = np.array([1,1,1,-1,-1,-1])
 grid = 100
-grid_size = 0.15
+grid_size = 0.4
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
@@ -30,11 +30,11 @@ Bx,Bz = np.meshgrid(np.zeros(grid),np.zeros(grid))
 print("Solving Biot-Savart Array")
 t1_start = perf_counter() 
 
-for mag_num in range(len(magnet_pos)):
+for (mag_num,mpos) in enumerate(magnet_pos):
     for i in range(grid):
-        print(100*i/(grid*len(magnet_pos)),"%")
+        print(100*((mag_num/len(magnet_pos))+ (i/(grid*len(magnet_pos)))),"%")
         for y in range(grid):
-            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-magnet_pos[mag_num][0],0,z[y] - magnet_pos[mag_num][1] ]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-mpos[0],0,z[y] - mpos[1] ]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
             Bx[y,i] += xd[0]
             Bz[y,i] += xd[2]
 
@@ -50,7 +50,7 @@ fig, ax = plt.subplots(figsize=(10, 10))
 
 # Plot the B-field
 print("Rendering Stream Plot")
-stream = ax.streamplot(X, Z, Bx, Bz, density=3, color=B_mag, cmap='viridis', 
+stream = ax.streamplot(X, Z, Bx, Bz, density=5, color=B_mag, cmap='viridis', 
                        linewidth=1, arrowsize=0, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
 
 # Plot the magnet

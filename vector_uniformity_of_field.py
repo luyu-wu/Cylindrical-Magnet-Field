@@ -7,7 +7,7 @@ from scipy.interpolate import make_interp_spline, BSpline
 import bfield
 
 v_steps = 1 # circles around the magnet
-cir_steps = 20 # steps around the circle
+cir_steps = 4 # steps around the circle
 
 
 distances = np.linspace(0,1,100)

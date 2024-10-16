@@ -5,21 +5,22 @@ from numpy import linalg as la
 import bfield
 
 size_c = 40  # Grid size
-size_v = 20
+size_v = 40
+position = np.array([0,0.005,0.01])
 # Reference value calculation
 print("Compiling...")
 reference = la.norm(bfield.solution(
-    position=np.array([0, 0, 0]),
+    position=position,
     mradius=0.01,
     mheight=0.03,
     magnetization=1e7,
-    accuracy=[1000, 40]
+    accuracy=[1000, 400]
 ))
 print("Found reference")
 
 # Define accuracy ranges
-accuracies_v = np.linspace(1, 40, size_v).astype(int)
-accuracies_c = np.linspace(3, 150, size_c).astype(int)
+accuracies_v = np.linspace(1, size_v+1, size_v).astype(int)
+accuracies_c = np.linspace(3, size_c+3, size_c).astype(int)
 relative_acc = np.zeros((size_c, size_v))
 
 # Calculate relative accuracy for different discretizations
@@ -27,7 +28,7 @@ relative_acc = np.zeros((size_c, size_v))
 for v_s in range(size_v):
     for c_s in range(size_c):
         current_solution = la.norm(bfield.solution(
-            position=np.array([0, 0, 0]),
+            position=position,
             mradius=0.01,
             mheight=0.03,
             magnetization=1e7,

@@ -7,11 +7,11 @@ import math
 import scipy
 from time import perf_counter
 
-v_steps = 1 # circles around the magnet
-cir_steps = 10 # steps around the circle
+v_steps = 4 # circles around the magnet
+cir_steps = 80 # steps around the circle
 
 a = 0.00636  # radius of the magnet in meters
-b = 1e-9  # length of the magnet in meters
+b = 0.005  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
 grid = 100
