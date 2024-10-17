@@ -14,11 +14,11 @@ import numpy as np
 def solution(position=np.ones(3),mradius=.0,mheight=.0,magnetization=.0,accuracy=np.ones(2)):
     field = np.zeros(3)
     point = np.linspace(0,2*np.pi,accuracy[1])
-    
-    for height in np.linspace(-mheight/2, mheight/2,accuracy[0]):
+    height = np.linspace(-mheight/2, mheight/2,accuracy[0])
+    for h in prange(0,accuracy[0]-1):
         for rad in prange(1,accuracy[1]):
-            v1 = np.array([np.cos(point[rad-1])*mradius,np.sin(point[rad-1])*mradius,height])
-            v2 = np.array([np.cos(point[ rad ])*mradius,np.sin(point[ rad ])*mradius,height])
+            v1 = np.array([np.cos(point[rad-1])*mradius,np.sin(point[rad-1])*mradius,height[h]])
+            v2 = np.array([np.cos(point[ rad ])*mradius,np.sin(point[ rad ])*mradius,height[h]])
             
             r = position - v1
             field += np.cross((v2-v1), r) / (np.linalg.norm(r)**3)
