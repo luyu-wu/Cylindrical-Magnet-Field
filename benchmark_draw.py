@@ -1,14 +1,14 @@
 import numpy as np
 import bfield
-#import bfield_no_numba as bfield
-#import bfield_threaded as bfield
 import time
 import matplotlib.pyplot as plt
 
 length = 100
-batches = 10
+batches = 30
+step_size = 10
 
-# jit compile beforehand
+comp_time = time.perf_counter()
+print("Compiling B-Field..")
 bfield.solution(
     position=np.array([0,0,0.1]),
     mradius=0.005,
@@ -16,6 +16,8 @@ bfield.solution(
     magnetization=1.1*(10**7),
     accuracy=[2,2]
 )
+print("Precompiled B-Field:",int(1e3* (time.perf_counter()-comp_time) ),"ms\n")
+
 
 # Circular discretizations benchmark
 v_steps = 2 # circles around the magnet
@@ -34,7 +36,7 @@ for leng in range(length):
             accuracy=[v_steps,cir_steps]
         )
         data_raw[leng,num] = 1e6*(time.perf_counter()-t0)
-        cir_steps += 1
+    cir_steps += step_size
 
 avs = np.zeros(length)
 st_devs = np.zeros(length)
@@ -77,7 +79,7 @@ for leng in range(length):
             accuracy=[v_steps,cir_steps]
         )
         data_raw[leng,num] = 1e6*(time.perf_counter()-t0)
-        v_steps += 1
+    v_steps += step_size
 
 avs = np.zeros(length)
 st_devs = np.zeros(length)
