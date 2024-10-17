@@ -20,7 +20,7 @@ def solution(position=np.ones(3),mradius=.0,mheight=.0,magnetization=1e+5,accura
             v1 = np.array([np.cos(point[rad-1])*mradius, np.sin(point[rad-1])*mradius, h])
             v2 = np.array([np.cos(point[ rad ])*mradius, np.sin(point[ rad ])*mradius, h])
             
-            r = position - v1
+            r = position - (v1+v2)/2
             field += np.cross((v2-v1), r) / (np.linalg.norm(r)**3)
 
     return field * 2*np.pi*mradius * magnetization * 1e-7 / accuracy[0] # v3d with magnitude being in tesla
