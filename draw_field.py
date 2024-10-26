@@ -7,15 +7,15 @@ import math
 import scipy
 from time import perf_counter
 
-v_steps = 100 # circles around the magnet
+v_steps = 3 # circles around the magnet
 cir_steps = 20 # steps around the circle
 
 a = 0.00636  # radius of the magnet in meters
-b = 0.04  # length of the magnet in meters
+b = 0.005  # length of the magnet in meters
 M = 1e5  # magnetization in A/m
 
 grid = 100
-grid_size = 0.4
+grid_size = 0.2
 angle = np.pi
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
