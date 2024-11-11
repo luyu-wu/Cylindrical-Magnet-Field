@@ -14,7 +14,7 @@ cir_steps = 24 # steps around the circle
 
 a = 0.0075  # radius of the magnet in meters
 b = 0.001  # length of the magnet in meters
-M = 1e5  # magnetization in A/m
+m = 1  # magnetization in Am^2
 
 magnet_pos = np.array([ [0.02,-0],[-0.02,0]])
 magnet_ori = np.array([1,-1])
@@ -34,7 +34,7 @@ for (mag_num,mpos) in enumerate(magnet_pos):
     for i in range(grid):
         print(100*((mag_num/len(magnet_pos))+ (i/(grid*len(magnet_pos)))),"%")
         for y in range(grid):
-            xd = 1000*magnet_ori[mag_num]*bfield.solution(np.array([x[i]-mpos[0],0,z[y] - mpos[1] ]),magnetization=M,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+            xd = magnet_ori[mag_num]*bfield.solution(np.array([x[i]-mpos[0],0,z[y] - mpos[1] ]),moment=m,mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
             Bx[y,i] += xd[0]
             Bz[y,i] += xd[2]
 
@@ -51,7 +51,7 @@ fig, ax = plt.subplots(figsize=(10, 10))
 # Plot the B-field
 print("Rendering Stream Plot")
 stream = ax.streamplot(X, Z, Bx, Bz, density=2, color=B_mag, cmap='viridis', 
-                       linewidth=1, arrowsize=0.8, norm=plt.Normalize(vmin=0, vmax=B_mag.max(),),broken_streamlines=True)
+                       linewidth=1, arrowsize=0.8,broken_streamlines=True)
 
 # Plot the magnet
 for magnet_p in magnet_pos:
@@ -59,7 +59,7 @@ for magnet_p in magnet_pos:
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)
-cbar.set_label('Log Magnetic field strength (mT)')
+cbar.set_label('Log Magnetic field strength (T)')
 
 ax.set_xlabel('x (m)')
 ax.set_ylabel('z (m)')

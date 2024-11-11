@@ -13,7 +13,7 @@ bfield.solution(
     position=np.array([0,0,0.1]),
     mradius=0.005,
     mheight=0.002,
-    magnetization=1.1*(10**7),
+    moment=1,
     accuracy=[2,2]
 )
 print("Precompiled B-Field:",int(1e3* (time.perf_counter()-comp_time) ),"ms\n")
@@ -32,7 +32,7 @@ for leng in range(length):
             position=np.array([0,0,0.1]),
             mradius=0.005,
             mheight=0.002,
-            magnetization=1.1*(10**7),
+            moment=1,
             accuracy=[v_steps,cir_steps]
         )
         data_raw[leng,num] = 1e6*(time.perf_counter()-t0)
@@ -75,7 +75,7 @@ for leng in range(length):
             position=np.array([0,0,0.1]),
             mradius=0.005,
             mheight=0.002,
-            magnetization=1.1*(10**7),
+            moment=1,
             accuracy=[v_steps,cir_steps]
         )
         data_raw[leng,num] = 1e6*(time.perf_counter()-t0)

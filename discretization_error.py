@@ -13,7 +13,7 @@ reference = la.norm(bfield.solution(
     position=position,
     mradius=0.01,
     mheight=0.03,
-    magnetization=1e7,
+    moment=1,
     accuracy=[1000, 400]
 ))
 print("Found reference")
@@ -31,7 +31,7 @@ for v_s in range(size_v):
             position=position,
             mradius=0.01,
             mheight=0.03,
-            magnetization=1e7,
+            moment=1,
             accuracy=[accuracies_v[v_s], accuracies_c[c_s]]
         ))
         relative_acc[c_s, v_s] = abs((reference - current_solution) / reference) * 100

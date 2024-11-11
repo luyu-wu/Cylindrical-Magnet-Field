@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 ## MODULES
 import numpy as np 
 import matplotlib.pyplot as plt
@@ -7,12 +9,8 @@ import math
 import scipy
 from time import perf_counter
 
-v_steps = 10 # circles around the magnet
-cir_steps = 20 # steps around the circle
-
-a = 0.00636  # radius of the magnet in meters
-b = 0.005  # length of the magnet in meters
-
+magnet_pos = np.array([[0,0]])
+magnet_ori = np.array([1])
 grid = 100
 grid_size = 0.2
 x = np.linspace(-grid_size/2, grid_size/2, grid)
@@ -25,11 +23,15 @@ Bx,Bz = np.meshgrid(np.zeros(grid),np.zeros(grid))
 print("Solving Biot-Savart Array")
 t1_start = perf_counter() 
 
-for i in range(grid):
-    print(100*i/grid,"% Completion")
-    for y in range(grid):
-        xd = bfield.solution(np.array([x[i],0,z[y]]),mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
-        Bx[y,i],Bz[y,i] = xd[0],xd[2]
+for (mag_num,mpos) in enumerate(magnet_pos):
+    for i in range(grid):
+        print(100*((mag_num/len(magnet_pos))+ (i/(grid*len(magnet_pos)))),"%")
+        for y in range(grid):
+            position = np.array([x[i]-mpos[0],0,z[y]])
+            position_unit = position/la.norm(position)
+            xd = (1e-7/la.norm(position)**3) * (3*position_unit*(np.dot(np.array([0,0,1]), position_unit))- np.array([0,0,1]))
+            Bx[y,i] += xd[0]
+            Bz[y,i] += xd[2]
 
 t1_stop = perf_counter()
  
@@ -47,7 +49,8 @@ stream = ax.streamplot(X, Z, Bx, Bz, density=2, color=B_mag, cmap='viridis',
                        linewidth=1, arrowsize=0.8, broken_streamlines=True)
 
 # Plot the magnet
-ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, b, fill=True, facecolor='grey', edgecolor='black'))
+for magnet_p in magnet_pos:
+    ax.add_patch(plt.Rectangle((magnet_p[0]-0.005, magnet_p[1]-0.0025/2), 0.01, 0.0025, fill=True, facecolor='grey', edgecolor='black'))
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)

@@ -5,9 +5,9 @@ import math
 import scipy
 import bfield
 
-v_steps = 30 # circles around the magnet
-cir_steps = 200 # steps around the circle
-
+v_steps = 10 # circles around the magnet
+cir_steps = 20 # steps around the circle
+moment = 0.278
 
 
 experimental = [
@@ -43,17 +43,24 @@ exp_distances = np.linspace(1,11,11)
 distances = np.linspace(0.01,0.11,100)
 
 field = np.array([])
+field_dipole = np.array([])
 for hfrom in distances:
+    position = np.array([0,0,hfrom])
+    position_unit = np.array([0,0,1])
     strength = bfield.solution(
-            position=np.array([0,0,hfrom+0.002]),
+            position=position,
             mradius=0.005,
             mheight=0.002,
-            magnetization=1.1*(10**6),
+            moment=moment,
             accuracy=[v_steps,cir_steps]
         )
-    field = np.append(field,strength[2]*4500*hfrom**1.8)
+    field = np.append(field,la.norm(strength))
 
-plt.plot(distances*100,field*1000,label="Theoretical Model")
+    dipole = (1e-7/la.norm(position)**3) * (3*position_unit*(np.dot(np.array([0,0,moment]), position_unit))- np.array([0,0,moment]))
+    field_dipole = np.append(field_dipole,la.norm(dipole))
+
+plt.plot(distances*100,field*1000,label="Current Cylinder Model")
+plt.plot(distances*100,field_dipole*1000,label="Dipole Model")
 
 plt.errorbar(exp_distances,experimental,yerr=exp_error,fmt='o',label="Experimental Values")
 plt.xlabel("Distance from Magnet (cm)")

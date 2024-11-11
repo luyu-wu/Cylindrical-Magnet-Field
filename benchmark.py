@@ -16,7 +16,7 @@ bfield.solution(
         position=np.array([0,0,0.1]),
         mradius=0.005,
         mheight=0.002,
-        magnetization=1.1*(10**7),
+        moment=1,
         accuracy=[v_steps,cir_steps]
     )
 
@@ -29,7 +29,7 @@ for _ in range(length):
         position=np.array([0,0,0.1]),
         mradius=0.005,
         mheight=0.002,
-        magnetization=1.1*(10**7),
+        moment=1,
         accuracy=[v_steps,cir_steps]
     )
 
