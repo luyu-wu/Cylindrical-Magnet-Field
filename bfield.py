@@ -11,7 +11,7 @@ import numpy as np
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
 
 @njit
-def solution(position=np.ones(3),mradius=.001,mheight=.0,moment=1.0,accuracy=np.array([10,2])):
+def solution(position=np.ones(3),mradius=.005,mheight=.003,moment=1.0,accuracy=np.array([10,2])):
     field = np.zeros(3)
     point = np.linspace(0,2*np.pi,accuracy[1])
     

@@ -11,10 +11,11 @@ v_steps = 10 # circles around the magnet
 cir_steps = 20 # steps around the circle
 
 a = 0.00636  # radius of the magnet in meters
-b = 0.005  # length of the magnet in meters
+b = 0.0063  # length of the magnet in meters
+m = 0.564
 
 grid = 100
-grid_size = 0.2
+grid_size = 0.1
 x = np.linspace(-grid_size/2, grid_size/2, grid)
 z = np.linspace(-grid_size/2, grid_size/2, grid)
 
@@ -28,14 +29,14 @@ t1_start = perf_counter()
 for i in range(grid):
     print(100*i/grid,"% Completion")
     for y in range(grid):
-        xd = bfield.solution(np.array([x[i],0,z[y]]),mradius=a,mheight=b,accuracy=[v_steps,cir_steps])
+        xd = bfield.solution(np.array([x[i],0,z[y]]),mradius=a,mheight=b,accuracy=[v_steps,cir_steps],moment=m)
         Bx[y,i],Bz[y,i] = xd[0],xd[2]
 
 t1_stop = perf_counter()
  
 print("Elapsed time:", (t1_stop-t1_start),"s")
 
-B_mag = np.log(np.sqrt(Bx**2 + Bz**2))
+B_mag = np.log10(np.sqrt(Bx**2 + Bz**2))
 
 # Plot the results
 fig, ax = plt.subplots(figsize=(10, 10))
@@ -51,11 +52,11 @@ ax.add_patch(plt.Rectangle((-a, -b/2), 2*a, b, fill=True, facecolor='grey', edge
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)
-cbar.set_label('Log Magnetic field strength (T)')
+cbar.set_label('Magnetic field strength ($log_{10}[T]$)')
 
 ax.set_xlabel('x (m)')
 ax.set_ylabel('z (m)')
-ax.set_title('B-field (log) Around a Cylindrical Magnet')
+ax.set_title('B-field ($log_{10}$) Around a Cylindrical Magnet')
 ax.set_aspect('equal')
 ax.set_xlim(-grid_size/2, grid_size/2)
 ax.set_ylim(-grid_size/2, grid_size/2)
