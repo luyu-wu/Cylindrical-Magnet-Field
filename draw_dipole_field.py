@@ -20,12 +20,9 @@ X, Z = np.meshgrid(x, z)
 
 Bx,Bz = np.meshgrid(np.zeros(grid),np.zeros(grid))
 
-print("Solving Biot-Savart Array")
-t1_start = perf_counter() 
 
 for (mag_num,mpos) in enumerate(magnet_pos):
     for i in range(grid):
-        print(100*((mag_num/len(magnet_pos))+ (i/(grid*len(magnet_pos)))),"%")
         for y in range(grid):
             position = np.array([x[i]-mpos[0],0,z[y]])
             position_unit = position/la.norm(position)
@@ -35,7 +32,6 @@ for (mag_num,mpos) in enumerate(magnet_pos):
 
 t1_stop = perf_counter()
  
-print("Elapsed time:", (t1_stop-t1_start),"s")
 
 B_mag = np.log(np.sqrt(Bx**2 + Bz**2))
 
@@ -47,10 +43,6 @@ fig, ax = plt.subplots(figsize=(10, 10))
 print("Rendering Stream Plot")
 stream = ax.streamplot(X, Z, Bx, Bz, density=2, color=B_mag, cmap='viridis', 
                        linewidth=1, arrowsize=0.8, broken_streamlines=True)
-
-# Plot the magnet
-for magnet_p in magnet_pos:
-    ax.add_patch(plt.Rectangle((magnet_p[0]-0.005, magnet_p[1]-0.0025/2), 0.01, 0.0025, fill=True, facecolor='grey', edgecolor='black'))
 
 # Add colorbar
 cbar = fig.colorbar(stream.lines)

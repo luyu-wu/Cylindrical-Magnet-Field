@@ -42,7 +42,7 @@ t1_stop = perf_counter()
  
 print("Elapsed time:", (t1_stop-t1_start),"s")
 
-B_mag = np.log(np.sqrt(Bx**2 + Bz**2))
+B_mag = np.log10(np.sqrt(Bx**2 + Bz**2))
 
 # Plot the results
 fig, ax = plt.subplots(figsize=(10, 10))

@@ -17,7 +17,7 @@ for hfrom in distances:
             position=np.array([0,0,hfrom]),
             mradius=0.005,
             mheight=0,
-            magnetization=8.2*(10**6),
+            moment=0.8,
             accuracy=[v_steps,cir_steps]
         )
     field = np.append(field,strength[2]/la.norm(strength))
