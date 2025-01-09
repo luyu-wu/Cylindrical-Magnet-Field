@@ -5,7 +5,7 @@ This solution uses a bound current line integral approximation, numerically inte
 '''
 
 ## MODULES
-from numba import njit
+from numba import njit, prange
 import numpy as np
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL
 
