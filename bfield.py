@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 '''
-Written by Luyu as a general solution to a cylindrical magnet's b-field.
 This solution uses a bound current line integral approximation, numerically integrated along the length of the cylinder to obtain a valid approximation of the B-field of the cylindrical ferromagnets at any point outside it.
 '''
 
 ## MODULES
-from numba import njit, prange
+from numba import njit
 import numpy as np
-# X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL (i cant do y is vertical anymore these days)
+# X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL
 
 @njit
 def solution(position=np.ones(3),mradius=.005,mheight=.003,moment=1.0,accuracy=[10,2]):
