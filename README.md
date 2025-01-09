@@ -28,8 +28,6 @@ numba
 ```
 
 ## Showcase
-![multifield](https://github.com/user-attachments/assets/be06950f-b90f-424a-9de5-34decc347970)
-
 ![CorrectLogField](https://github.com/user-attachments/assets/d1c530a0-9e9f-4dfb-a72f-bae5d5d1f85c)
 
 ![compared_todipolemodel](https://github.com/user-attachments/assets/4994ccfa-a336-4dd1-aad9-381a84ffd8df)
