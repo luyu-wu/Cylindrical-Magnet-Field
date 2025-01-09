@@ -30,8 +30,9 @@ numba
 ## Showcase
 ![multifield](https://github.com/user-attachments/assets/be06950f-b90f-424a-9de5-34decc347970)
 
-![high_res](https://github.com/user-attachments/assets/0909a81f-3f80-4827-82ce-33d3d0b28551)
+![CorrectLogField](https://github.com/user-attachments/assets/d1c530a0-9e9f-4dfb-a72f-bae5d5d1f85c)
 
+![compared_todipolemodel](https://github.com/user-attachments/assets/4994ccfa-a336-4dd1-aad9-381a84ffd8df)
 
 
 srry for teh messy code, this is just some stuff i used for iypt that it hought id publish ya :P
