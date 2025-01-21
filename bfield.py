@@ -9,7 +9,7 @@ from numba import njit, prange
 import numpy as np
 # X AND Y ARE PLANAR DIRECTIONS, Z IS VERTICAL
 
-@njit
+@njit(cache=True)
 def solution(position=np.ones(3),mradius=.005,mheight=.003,moment=1.0,accuracy=[10,2]):
     field = np.zeros(3)
     point = np.linspace(0,2*np.pi,accuracy[1])
