@@ -20,7 +20,7 @@ print("Found reference")
 
 # Define accuracy ranges
 accuracies_v = np.linspace(1, size_v+1, size_v).astype(int)
-accuracies_c = np.linspace(3, size_c+3, size_c).astype(int)
+accuracies_c = 2*np.linspace(3, size_c+3, size_c).astype(int)
 relative_acc = np.zeros((size_c, size_v))
 
 # Calculate relative accuracy for different discretizations
