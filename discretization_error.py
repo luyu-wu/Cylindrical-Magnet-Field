@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from numpy import linalg as la
 import bfield
 
@@ -43,6 +42,7 @@ Z = relative_acc
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
+ax.view_init(elev=30., azim=45.)
 surf = ax.plot_surface(X, Y, Z, cmap='viridis')
 
 # Set axis labels

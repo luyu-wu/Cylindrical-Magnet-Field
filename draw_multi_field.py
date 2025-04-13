@@ -3,10 +3,7 @@
 ## MODULES
 import numpy as np 
 import matplotlib.pyplot as plt
-from numpy import linalg as la
 import bfield
-import math
-import scipy
 from time import perf_counter
 
 v_steps = 1 # circles around the magnet

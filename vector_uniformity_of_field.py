@@ -1,9 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
 from numpy import linalg as la
-import math
-import scipy
-from scipy.interpolate import make_interp_spline, BSpline
 import bfield
 
 v_steps = 1 # circles around the magnet
