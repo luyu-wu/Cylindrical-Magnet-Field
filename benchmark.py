@@ -4,6 +4,7 @@ from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
+# import bfield
 import bfield
 
 print(
@@ -12,7 +13,7 @@ print(
 
 v_steps = 10  # circles around the magnet
 cir_steps = 20  # steps around the circle
-length = 50000
+length = 10000
 
 t0 = time.perf_counter()
 
@@ -69,7 +70,7 @@ def worker_function(args):
 
 
 num_cpus = mp.cpu_count()
-print(f"Using {num_cpus} CPU cores")
+print("Using", num_cpus, "CPU cores")
 
 # Split the work
 iterations_per_process = length
