@@ -4,11 +4,11 @@ import matplotlib.pyplot as plt
 import bfield
 from time import perf_counter
 
-v_steps = 10  # circles around the magnet
+v_steps = 100  # circles around the magnet
 cir_steps = 20  # steps around the circle
 
 a = 0.00636  # radius of the magnet in meters
-b = 0.0063  # length of the magnet in meters
+b = 0.0163  # length of the magnet in meters
 m = 0.564
 
 grid = 40

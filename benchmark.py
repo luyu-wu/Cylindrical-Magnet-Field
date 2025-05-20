@@ -4,7 +4,6 @@ from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
-# import bfield
 import bfield
 
 print(
@@ -13,7 +12,7 @@ print(
 
 v_steps = 10  # circles around the magnet
 cir_steps = 20  # steps around the circle
-length = 10000
+length = 25000
 
 t0 = time.perf_counter()
 
