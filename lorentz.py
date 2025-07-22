@@ -38,11 +38,11 @@ def solution(
     mradius2=None,
     accuracy=[1, 100],
 ):  # relative position
-    if moment2 == None:
+    if moment2 is None:
         moment2 = moment
-    if mradius2 == None:
+    if mradius2 is None:
         mradius2 = mradius
-        
+
     force = np.zeros(3)
     point = np.linspace(0, 2 * np.pi, accuracy[1])
 
