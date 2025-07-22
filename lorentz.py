@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ## MODULES
-import bfield
+import extern.bfield.bfield as bfield #UPDATE AS NEEDED
 import numpy as np
 from numba import njit, prange
 
