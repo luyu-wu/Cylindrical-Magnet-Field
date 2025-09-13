@@ -6,17 +6,17 @@ import matplotlib.pyplot as plt
 import bfield
 from time import perf_counter
 
-v_steps = 1  # circles around the magnet
-cir_steps = 8  # steps around the circle
+v_steps = 12  # circles around the magnet
+cir_steps = 24  # steps around the circle
 
 a = 0.02  # radius of the magnet in meters
-b = 0.001  # length of the magnet in meters
+b = 0.005  # length of the magnet in meters
 m = 1  # magnetization in Am^2
 
-magnet_pos = np.array([[0, -0.02], [0, 0.02],[0, 0],[0, 0.04],[0, -0.04]])
-magnet_ori = np.array([1, 1, 1,1,1])
+magnet_pos = np.array([[0, -0.02], [0, 0.02]])
+magnet_ori = np.array([1, -1])
 grid = 100
-grid_size = 0.2
+grid_size = 0.064
 x = np.linspace(-grid_size / 2, grid_size / 2, grid)
 z = np.linspace(-grid_size / 2, grid_size / 2, grid)
 
