@@ -1,15 +1,16 @@
-import numpy as np
-import lorentz
-
 # import bfield_no_numba as bfield
 # import bfield_threaded as bfield
 import time
+
+import numpy as np
+
+import lorentz
 
 print(
     "\n\033[1mLorentz Force Benchmark\033[0m\nPlease wait while the benchmark is run!\n"
 )
 
-v_steps = 1  # circles around the magnet
+v_steps = 4  # circles around the magnet
 cir_steps = 8  # steps around the circle
 length = 5000
 

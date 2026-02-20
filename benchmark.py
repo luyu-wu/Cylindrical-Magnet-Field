@@ -1,10 +1,11 @@
-import multiprocessing as mp
+# import multiprocessing as mp
 import time
-from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 
+# from concurrent.futures import ProcessPoolExecutor
 import bfield
+import bfield_numba
 
 print(
     "\n\033[1mCylindrical B-Field Benchmark\033[0m\nPlease wait while the benchmark is run!\n"
@@ -16,7 +17,7 @@ length = 25000
 
 t0 = time.perf_counter()
 
-bfield.solution(
+bfield_numba.solution(
     position=np.array([0, 0, 0.1]),
     mradius=0.005,
     mheight=0.002,
@@ -45,13 +46,39 @@ print(
     "ns",
 )
 
-
 print(
     "\nSpeed:",
     calls_st,
     "Calls/s",
 )
 
+print("\n\033[1mCompiled B-Field Benchmark\033[0m")
+
+t0 = time.perf_counter()
+
+for _ in range(length):
+    bfield_comp.solution(
+        position=np.array([0, 0, 0.1]),
+        mradius=0.005,
+        mheight=0.002,
+        moment=1,
+        accuracy=[v_steps, cir_steps],
+    )
+
+calls_st = int(1 / ((time.perf_counter() - t0) / (length * v_steps * cir_steps)))
+
+print(
+    "Arc Call Time:",
+    int(1e9 * (time.perf_counter() - t0) / (length * v_steps * cir_steps)),
+    "ns",
+)
+
+print(
+    "\nSpeed:",
+    calls_st,
+    "Calls/s",
+)
+"""
 print("\n\033[1mMultithreaded B-Field Benchmark\033[0m\n")
 
 
@@ -93,3 +120,4 @@ print(
 )
 
 print("\n\nSpeedup (MT/ST)", calls_mt / calls_st, "X")
+"""

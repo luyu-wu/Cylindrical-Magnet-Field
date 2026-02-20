@@ -46,12 +46,12 @@ stream = ax.streamplot(
     Z,
     Bx,
     Bz,
-    density=2,
+    density=1,
     color=B_mag,
     cmap="viridis",
     linewidth=1,
-    arrowsize=0.8,
-    broken_streamlines=True,
+    arrowsize=0,
+    broken_streamlines=False,
 )
 
 # Add colorbar

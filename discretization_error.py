@@ -1,6 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from numpy import linalg as la
+
 import bfield
 
 size_c = 40  # Grid size

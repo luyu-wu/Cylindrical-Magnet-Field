@@ -1,65 +1,108 @@
 #!/usr/bin/env python
+"""
+lorentz.py  –  wrapper around liblorentz.so
 
-## MODULES
-import extern.bfield.bfield as bfield #UPDATE AS NEEDED
+Drop-in replacement for the original lorentz.py.  The public API is identical:
+
+    from lorentz import solution
+    force = solution(position, orientation, mradius, mheight, moment, moment2, mradius2, accuracy)
+
+Build the shared library with:
+
+    gcc -O2 -shared -fPIC -o liblorentz.so lorentz_library.c bfield_library.c -lm
+"""
+
+import ctypes
+import os
+
 import numpy as np
-from numba import njit, prange
 
+# ---------------------------------------------------------------------------
+# Load shared library
+# ---------------------------------------------------------------------------
+_lib = ctypes.CDLL(os.path.abspath("./liblorentz.so"))
 
-@njit(cache=True)
-def transformCircle(orientation, rad):
-    if abs(orientation[2]) > 0.99999:
-        return np.array([np.cos(rad), np.sin(rad), 0.0])
+_lib.lorentz_force.argtypes = [
+    ctypes.POINTER(ctypes.c_double),  # position[3]
+    ctypes.POINTER(ctypes.c_double),  # orientation[3]
+    ctypes.c_double,                  # mradius
+    ctypes.c_double,                  # mheight
+    ctypes.c_double,                  # moment
+    ctypes.c_double,                  # moment2
+    ctypes.c_double,                  # mradius2
+    ctypes.c_int,                     # h_acc
+    ctypes.c_int,                     # r_acc
+    ctypes.POINTER(ctypes.c_double),  # out[3]
+]
+_lib.lorentz_force.restype = None
 
-    # Calculate vector rotation
-    z_axis = np.array([0.0, 0.0, 1.0])
-    rotation_axis = np.cross(z_axis, orientation)
-    rotation_axis = rotation_axis / np.sqrt(np.sum(rotation_axis**2))
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
 
-    # Create initial circle point
-    circle_point = np.array([np.cos(rad), np.sin(rad), 0.0])
-
-    return (
-        circle_point * orientation[2]  # cos term
-        + np.cross(rotation_axis, circle_point)
-        * np.sqrt(1 - orientation[2] ** 2)  # sin term
-        + rotation_axis * np.dot(rotation_axis, circle_point) * (1 - orientation[2])
-    )  # dot term
-
-
-@njit
 def solution(
-    position=np.array([0, 0, 1]),
-    orientation=np.array([0, 0, 1]),
+    position=np.array([0.0, 0.0, 1.0]),
+    orientation=np.array([0.0, 0.0, 1.0]),
     mradius=0.005,
     mheight=0.003,
     moment=1.0,
     moment2=None,
     mradius2=None,
-    accuracy=[1, 100],
-):  # relative position
+    accuracy=(1, 100),
+):
+    """
+    Compute the Lorentz force between two magnetic rings.
+
+    Parameters
+    ----------
+    position : array-like, shape (3,)
+        Relative position of the field source.
+    orientation : array-like, shape (3,)
+        Orientation unit vector of the current loop being integrated over.
+    mradius : float
+        Radius of the current loop (source of force).
+    mheight : float
+        Height of the magnet passed to the field solver.
+    moment : float
+        Magnetic moment of the field source.
+    moment2 : float, optional
+        Magnetic moment scale of the current loop.  Defaults to *moment*.
+    mradius2 : float, optional
+        Radius passed to the field solver.  Defaults to *mradius*.
+    accuracy : tuple of two ints (h_acc, r_acc)
+        (height accuracy, radial/angular accuracy) forwarded to the field solver.
+
+    Returns
+    -------
+    force : np.ndarray, shape (3,)
+        Force vector in SI units.
+    """
     if moment2 is None:
         moment2 = moment
     if mradius2 is None:
         mradius2 = mradius
 
-    force = np.zeros(3)
-    point = np.linspace(0, 2 * np.pi, accuracy[1])
+    position    = np.asarray(position,    dtype=np.float64)
+    orientation = np.asarray(orientation, dtype=np.float64)
 
-    for rad in prange(1, accuracy[1]):
-        v1 = transformCircle(orientation, point[rad - 1])
-        v2 = transformCircle(orientation, point[rad])
+    # Normalise orientation (guard against unnormalised input)
+    orientation = orientation / np.linalg.norm(orientation)
 
-        field = bfield.solution(
-            position=position + mradius * ((v1 + v2) / 2),
-            mradius=mradius2,
-            mheight=mheight,
-            moment=moment,
-            accuracy=accuracy,
-        )
+    h_acc, r_acc = int(accuracy[0]), int(accuracy[1])
 
-        dl = v2 - v1
+    out = np.zeros(3, dtype=np.float64)
 
-        force += np.cross(dl, field)
+    _lib.lorentz_force(
+        position.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
+        orientation.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
+        float(mradius),
+        float(mheight),
+        float(moment),
+        float(moment2),
+        float(mradius2),
+        h_acc,
+        r_acc,
+        out.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
+    )
 
-    return (force * moment2) / (2 * np.pi * (mradius**2))  # force, current, rad
+    return out
