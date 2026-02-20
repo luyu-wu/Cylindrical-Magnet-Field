@@ -8,14 +8,19 @@ It's of course quite flexible, and can be extended for use as a current-ring, so
 
 i wrote it for IYPT so if u end up using it for some YPT around the world pls let me know and we can chat a bit!
 
-## Organization
-uhh bfield and threaded_bfield are single worker and multi-worker (multithreaded) versions of the same thing. (removed now cause jit was just faster)
-It actually takes quite a bit of latency to spawn so many workers, so if u can use bfield and make ur calls threaded. bfield_threaded discretizes the current rings into chunks which is faster once u have approximately 80 or more discretizations
+## New Update
+The entire module has been rewritten in C (for funsies since I'm learning more C right now anyways).
+Please compile with the following commands (or equivalent):
+```shell
+gcc -O3 -fPIC -shared -ffast-math lorentz_library.c bfield_library.c -lm -o liblorentz.so
+gcc -O3 -march=native -ffast-math -fPIC -shared bfield_library.c -lm -o libbfield.so
+```
+
+bfield.py and lorentz.py are wrappers for this shared library (they work the same as before, essentially a compatibility layer).
+The speedup can be well over 10x in some cases!
 
 ```python
 import bfield
-# OR
-import threaded_bfield as bfield
 
 bfield.solution(np.array([0,0,2]),moment=0.8,mradius=0.02,mheight=0.01,accuracy=[80,80])
 ```
@@ -23,8 +28,6 @@ bfield.solution(np.array([0,0,2]),moment=0.8,mradius=0.02,mheight=0.01,accuracy=
 ```
 # Python Packages
 numpy
-matplotlib
-numba
 ```
 
 ## Showcase

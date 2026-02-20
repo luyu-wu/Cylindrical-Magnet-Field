@@ -1,18 +1,21 @@
 ## MODULES
-import numpy as np
-import matplotlib.pyplot as plt
-import bfield
 from time import perf_counter
 
+import matplotlib.pyplot as plt
+import numpy as np
+from tqdm import tqdm
+
+import bfield
+
 v_steps = 100  # circles around the magnet
-cir_steps = 20  # steps around the circle
+cir_steps = 24  # steps around the circle
 
 a = 0.005  # radius of the magnet in meters
 b = 0.08  # length of the magnet in meters
 m = 0.564
 
-grid = 40
-grid_size = 0.1
+grid = 200
+grid_size = 0.125
 x = np.linspace(-grid_size / 2, grid_size / 2, grid)
 z = np.linspace(-grid_size / 2, grid_size / 2, grid)
 
@@ -23,8 +26,7 @@ Bx, Bz = np.meshgrid(np.zeros(grid), np.zeros(grid))
 print("Solving Biot-Savart Array")
 t1_start = perf_counter()
 
-for i in range(grid):
-    print(100 * i / grid, "% Completion")
+for i in tqdm(range(grid)):
     for y in range(grid):
         xd = bfield.solution(
             np.array([x[i], 0, z[y]]),

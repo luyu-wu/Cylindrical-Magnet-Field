@@ -1,13 +1,16 @@
 #!/usr/bin/python
 
 ## MODULES
-import numpy as np
-import matplotlib.pyplot as plt
-import bfield
 from time import perf_counter
 
-v_steps = 12  # circles around the magnet
-cir_steps = 24  # steps around the circle
+import matplotlib.pyplot as plt
+import numpy as np
+from tqdm import tqdm
+
+import bfield
+
+v_steps = 30  # circles around the magnet
+cir_steps = 100  # steps around the circle
 
 a = 0.02  # radius of the magnet in meters
 b = 0.005  # length of the magnet in meters
@@ -15,7 +18,7 @@ m = 1  # magnetization in Am^2
 
 magnet_pos = np.array([[0, -0.02], [0, 0.02]])
 magnet_ori = np.array([1, -1])
-grid = 100
+grid = 200
 grid_size = 0.064
 x = np.linspace(-grid_size / 2, grid_size / 2, grid)
 z = np.linspace(-grid_size / 2, grid_size / 2, grid)
@@ -28,8 +31,7 @@ print("Solving Biot-Savart Array")
 t1_start = perf_counter()
 
 for mag_num, mpos in enumerate(magnet_pos):
-    for i in range(grid):
-        print(100 * ((mag_num / len(magnet_pos)) + (i / (grid * len(magnet_pos)))), "%")
+    for i in tqdm(range(grid)):
         for y in range(grid):
             xd = magnet_ori[mag_num] * bfield.solution(
                 np.array([x[i] - mpos[0], 0, z[y] - mpos[1]]),
@@ -50,8 +52,18 @@ B_mag = np.log10(np.sqrt(Bx**2 + Bz**2))
 # Plot the results
 fig, ax = plt.subplots(figsize=(10, 10))
 
+# Plot colored background showing field intensity
+bg = ax.pcolormesh(
+    X,
+    Z,
+    B_mag,
+    cmap="inferno",
+    shading="auto",
+    alpha=0.75,
+    zorder=0,
+)
 
-# Plot the B-field
+# Plot the B-field streamlines on top
 print("Rendering Stream Plot")
 stream = ax.streamplot(
     X,
@@ -59,11 +71,11 @@ stream = ax.streamplot(
     Bx,
     Bz,
     density=2,
-    color=B_mag,
-    cmap="viridis",
+    color="black",
     linewidth=1,
     arrowsize=0.8,
     broken_streamlines=True,
+    zorder=1,
 )
 
 # Plot the magnet
@@ -76,12 +88,14 @@ for magnet_p in magnet_pos:
             fill=True,
             facecolor="grey",
             edgecolor="black",
+            zorder=2,
         )
     )
 
-# Add colorbar
-cbar = fig.colorbar(stream.lines)
-cbar.set_label("Log Magnetic field strength (T)")
+# Add colorbars
+cbar_bg = fig.colorbar(bg, ax=ax, fraction=0.046, pad=0.1)
+cbar_bg.set_label("Log Magnetic Field strength (T)")
+
 
 ax.set_xlabel("x (m)")
 ax.set_ylabel("z (m)")

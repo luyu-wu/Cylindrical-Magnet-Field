@@ -25,13 +25,13 @@ _lib = ctypes.CDLL(os.path.abspath("./liblorentz.so"))
 _lib.lorentz_force.argtypes = [
     ctypes.POINTER(ctypes.c_double),  # position[3]
     ctypes.POINTER(ctypes.c_double),  # orientation[3]
-    ctypes.c_double,                  # mradius
-    ctypes.c_double,                  # mheight
-    ctypes.c_double,                  # moment
-    ctypes.c_double,                  # moment2
-    ctypes.c_double,                  # mradius2
-    ctypes.c_int,                     # h_acc
-    ctypes.c_int,                     # r_acc
+    ctypes.c_double,  # mradius
+    ctypes.c_double,  # mheight
+    ctypes.c_double,  # moment
+    ctypes.c_double,  # moment2
+    ctypes.c_double,  # mradius2
+    ctypes.c_int,  # h_acc
+    ctypes.c_int,  # r_acc
     ctypes.POINTER(ctypes.c_double),  # out[3]
 ]
 _lib.lorentz_force.restype = None
@@ -39,6 +39,7 @@ _lib.lorentz_force.restype = None
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
+
 
 def solution(
     position=np.array([0.0, 0.0, 1.0]),
@@ -48,41 +49,14 @@ def solution(
     moment=1.0,
     moment2=None,
     mradius2=None,
-    accuracy=(1, 100),
+    accuracy=(2, 100),
 ):
-    """
-    Compute the Lorentz force between two magnetic rings.
-
-    Parameters
-    ----------
-    position : array-like, shape (3,)
-        Relative position of the field source.
-    orientation : array-like, shape (3,)
-        Orientation unit vector of the current loop being integrated over.
-    mradius : float
-        Radius of the current loop (source of force).
-    mheight : float
-        Height of the magnet passed to the field solver.
-    moment : float
-        Magnetic moment of the field source.
-    moment2 : float, optional
-        Magnetic moment scale of the current loop.  Defaults to *moment*.
-    mradius2 : float, optional
-        Radius passed to the field solver.  Defaults to *mradius*.
-    accuracy : tuple of two ints (h_acc, r_acc)
-        (height accuracy, radial/angular accuracy) forwarded to the field solver.
-
-    Returns
-    -------
-    force : np.ndarray, shape (3,)
-        Force vector in SI units.
-    """
     if moment2 is None:
         moment2 = moment
     if mradius2 is None:
         mradius2 = mradius
 
-    position    = np.asarray(position,    dtype=np.float64)
+    position = np.asarray(position, dtype=np.float64)
     orientation = np.asarray(orientation, dtype=np.float64)
 
     # Normalise orientation (guard against unnormalised input)
@@ -104,5 +78,4 @@ def solution(
         r_acc,
         out.ctypes.data_as(ctypes.POINTER(ctypes.c_double)),
     )
-
     return out
