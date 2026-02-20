@@ -25,9 +25,6 @@ def solution(
     moment=1.0,
     accuracy=(100, 200),
 ):
-    """
-    Fast shared-library magnetic field computation.
-    """
 
     px, py, pz = map(float, position)
     h_acc, r_acc = accuracy

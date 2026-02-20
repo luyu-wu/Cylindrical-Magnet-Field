@@ -18,7 +18,7 @@ m = 1  # magnetization in Am^2
 
 magnet_pos = np.array([[0, -0.02], [0, 0.02]])
 magnet_ori = np.array([1, -1])
-grid = 200
+grid = 500
 grid_size = 0.064
 x = np.linspace(-grid_size / 2, grid_size / 2, grid)
 z = np.linspace(-grid_size / 2, grid_size / 2, grid)

@@ -1,25 +1,10 @@
 #!/usr/bin/env python
-"""
-lorentz.py  –  wrapper around liblorentz.so
 
-Drop-in replacement for the original lorentz.py.  The public API is identical:
-
-    from lorentz import solution
-    force = solution(position, orientation, mradius, mheight, moment, moment2, mradius2, accuracy)
-
-Build the shared library with:
-
-    gcc -O2 -shared -fPIC -o liblorentz.so lorentz_library.c bfield_library.c -lm
-"""
 
 import ctypes
 import os
 
 import numpy as np
-
-# ---------------------------------------------------------------------------
-# Load shared library
-# ---------------------------------------------------------------------------
 _lib = ctypes.CDLL(os.path.abspath("./liblorentz.so"))
 
 _lib.lorentz_force.argtypes = [
@@ -35,10 +20,6 @@ _lib.lorentz_force.argtypes = [
     ctypes.POINTER(ctypes.c_double),  # out[3]
 ]
 _lib.lorentz_force.restype = None
-
-# ---------------------------------------------------------------------------
-# Public API
-# ---------------------------------------------------------------------------
 
 
 def solution(
@@ -58,8 +39,6 @@ def solution(
 
     position = np.asarray(position, dtype=np.float64)
     orientation = np.asarray(orientation, dtype=np.float64)
-
-    # Normalise orientation (guard against unnormalised input)
     orientation = orientation / np.linalg.norm(orientation)
 
     h_acc, r_acc = int(accuracy[0]), int(accuracy[1])

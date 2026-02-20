@@ -13,7 +13,7 @@ extern void bfield(
 );
 
 // Rodriguez Transform
-static void transformCircle(const double *orientation, double rad, double *out) {
+static void transformCircle(const double *orientation, double rad, double mradius,double *out) {
     double cos_r = cos(rad);
     double sin_r = sin(rad);
 
@@ -44,9 +44,9 @@ static void transformCircle(const double *orientation, double rad, double *out) 
 
     double dot = ax * cpx + ay * cpy + az * cpz;
 
-    out[0] = cpx * cos_theta + crx * sin_theta + ax * dot * (1.0 - cos_theta);
-    out[1] = cpy * cos_theta + cry * sin_theta + ay * dot * (1.0 - cos_theta);
-    out[2] = cpz * cos_theta + crz * sin_theta + az * dot * (1.0 - cos_theta);
+    out[0] = cpx * cos_theta + crx * sin_theta + ax * dot * (1.0 - cos_theta)*mradius;
+    out[1] = cpy * cos_theta + cry * sin_theta + ay * dot * (1.0 - cos_theta)*mradius;
+    out[2] = cpz * cos_theta + crz * sin_theta + az * dot * (1.0 - cos_theta)*mradius;
 }
 
 void lorentz_force(
@@ -74,8 +74,8 @@ void lorentz_force(
 
     for (int i = 1; i < r_acc; i++) {
         double v1[3], v2[3];
-        transformCircle(orientation, angles[i - 1], v1);
-        transformCircle(orientation, angles[i],     v2);
+        transformCircle(orientation, angles[i - 1], mradius,v1);
+        transformCircle(orientation, angles[i],mradius,     v2);
 
         double mid[3];
         mid[0] = position[0] + mradius * (v1[0] + v2[0]) / 2.0;

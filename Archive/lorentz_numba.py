@@ -59,7 +59,7 @@ def solution(
             accuracy=accuracy,
         )
 
-        dl = v2 - v1
+        dl = mradius*(v2 - v1)
 
         force += np.cross(dl, field)
 
